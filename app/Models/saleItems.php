@@ -11,6 +11,8 @@ class saleItems extends Model
 {
     use HasFactory;
 
+     protected $fillable = ['product_id','sale_invoice_id','price','totla','quantity'];
+
     public function invoice(){
 
     	return $this->belongsTo(saleInvoice::class);

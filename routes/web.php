@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post('sale-invoice/{user_id}/store',          		  [saleInvoiceController::class,'storeSale'])->name('users.sale_invoice.store');
      Route::delete('sale-invoice/{user_id}/delete/{id}',  		  [saleInvoiceController::class,'delete'])->name('users.sale_invoice.delete');
      Route::get('sale-invoice/{user_id}/invoice/{invoice_id}',    [saleInvoiceController::class,'invoiceDetails'])->name('users.sale_invoice.invoice');
+     Route::post('sale-invoice/{user_id}/invoice/{invoice_id}',    [saleInvoiceController::class,'productStore'])->name('users.sale_invoice.invoice.add_product');
+     Route::delete('sale-invoice/{user_id}/invoice/{invoice_id}/{item_id}',    [saleInvoiceController::class,'deleteProduct'])->name('users.sale_invoice.invoice.delete_product');
 
 
 

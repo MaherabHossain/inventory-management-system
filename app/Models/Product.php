@@ -18,6 +18,17 @@ class Product extends Model
     	return $this->belongsTo(Category::class);
     }
 
+        public static function findProduct(){
+    	$products            = Product::all();
+    	$data['products']    = [];
+
+    	foreach ($products as $product) {
+    		$data['products'][$product->id] = $product->tittle;
+    	}
+    	return $data;
+    }
+    
+
 
 
 }

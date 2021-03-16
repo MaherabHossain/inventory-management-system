@@ -35,40 +35,48 @@
 			    			<p> <strong>Challan No : </strong>{{ $invoice->challan_no }}</p>
 			    		</div>
 			    	</div>
-			    	<table class="table">
+
+			    	  @if(session('message'))
+			            <div class="alert alert-success" role="alert">
+			                <h5>{{ session('message') }}</h5>
+			            </div>
+			         @endif
+			    	<table class="table table-borderless">
 			    		<thead>
 			    			<th>SL</th>
 			    			<th>Product</th>
 			    			<th>Price</th>
 			    			<th>Quantity</th>
 			    			<th>Total</th>
-			    			<th>Action</th>
+			    			<th></th>
 			    		</thead>
 
 			    		<tfoot>
-			    			<th colspan="4">Total</th>
+			    			<th>
+			    				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_product">
+						        	 <i class="fa fa-plus"></i> Add Product 
+						       </button>
+			    			</th>
+			    			<th colspan="3" class="text-right">Total : </th>
 			    			<th>{{ $invoice->items->sum('totla') }}</th>
 			    			<th></th>
 			    			
 			    		</tfoot>
 
 			    		<tbody>
-			    			@foreach($invoice->items as $item)
+			    			@foreach($invoice->items as $key => $item)
 			    			<tr>
-			    				<td></td>
+			    				<td>{{ $key+1 }}</td>
 			    				<td>{{ $item->Product->tittle }}</td>
 			    				<td>{{ $item->Product->price }}</td>
 			    				<td>{{ $item->quantity }}</td>
 			    				<td>{{ $item->totla }}</td>
 			    				<td>
-			    					 <form method="POST" action=" {{ route('users.sale_invoice.delete', ['id' => $item->id, 'user_id' => $user->id]) }} ">
-			                          @csrf
-			                          @method('DELETE')
-			                          <a href="{{ route('users.sale_invoice.invoice',['user_id'=>$user->id,'invoice_id'=> $invoice->id]) }}" class="btn btn-success btn-sm"><i class="fa fa-eye" ></i></a>
+			    					 {!! Form::open([ 'route' => ['users.sale_invoice.invoice.delete_product', ['user_id' => $user->id, 'invoice_id' => $invoice->id,'item_id'=>$item->id] ], 'method' => 'delete' ]) !!}
 			                          <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger btn-sm"> 
 			                            <i class="fa fa-trash"></i>  
 			                          </button> 
-			                       </form>
+			                       {!! Form::close() !!}
 			    				</td>
 			    			</tr>
 			    			@endforeach
@@ -79,10 +87,60 @@
 		</div>
     </div>
 </div>
-
-
-
-
-
-
 @stop
+
+
+<!-- Add model -->
+
+<div class="modal fade" id="add_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+   
+    	{!! Form::open([ 'route' => ['users.sale_invoice.invoice.add_product', ['user_id' => $user->id, 'invoice_id' => $invoice->id] ], 'method' => 'post' ]) !!}
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newPaymentModalLabel"> Add Product </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+          
+		  <div class="form-group row">
+		    <label for="product" class="col-sm-3 col-form-label text-right">Product <span class="text-danger">*</span> </label>
+		    <div class="col-sm-9">
+
+		      {{ Form::select('product_id', $products, NULL, [ 'class'=>'form-control', 'id' => 'product', 'required', 'placeholder' => 'Select Product' ]) }}
+		    </div>
+		</div>
+
+          <div class="form-group row">
+            <label for="quantity" class="col-sm-3 col-form-label text-right"> Quantity <span class="text-danger">*</span>  </label>
+            <div class="col-sm-9">
+              {{ Form::text('quantity', NULL, [ 'class'=>'form-control', 'id' => 'quantity', 'placeholder' => 'Quantity', 'required' ]) }}
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="price" class="col-sm-3 col-form-label text-right"> Unit price <span class="text-danger">*</span>  </label>
+            <div class="col-sm-9">
+              {{ Form::text('price', NULL, [ 'class'=>'form-control', 'id' => 'price', 'placeholder' => 'Unit price', 'required' ]) }}
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="totla" class="col-sm-3 col-form-label text-right"> Total <span class="text-danger">*</span>  </label>
+            <div class="col-sm-9">
+              {{ Form::text('totla', NULL, [ 'class'=>'form-control', 'id' => 'totla', 'placeholder' => 'Total', 'required' ]) }}
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button> 
+        </div>
+      </div>
+      {!! Form::close() !!}
+  </div>
+</div>
