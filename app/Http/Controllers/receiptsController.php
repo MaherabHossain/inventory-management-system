@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Receipt;
+use App\Models\Product;
+use App\Models\saleInvoice;
 use App\Http\Requests\receiptRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -17,15 +19,25 @@ class receiptsController extends Controller
    		return view('users.receipts.receipts',$this->data);
    	}
 
-   	public function store( receiptRequest $request, $id){
+   	public function store( receiptRequest $request, $user_id, $invoice_id){
 
    		$formData	 			= $request->all();
-    	$formData['user_id']	= $id;
+    	$formData['user_id']	= $user_id;
     	$formData['admin_id']	= Auth::id();
+      if ($invoice_id) {
+        $formData['sale_invoice_id']  = $invoice_id;
+      }
     	if(Receipt::create($formData)){
             Session::flash('message','Receipt Added Successfully!');
         }
-      return redirect()->route('users.receipts',['id' => $id]);
+        if ($invoice_id) {
+          $this->data['invoice'] = saleInvoice::findOrFail($invoice_id);
+          $this->data['user'] = User::findOrFail($user_id);
+          $this->data['products'] = Product::findProduct();
+          Session::flash('message','Receipt Added Successfully!');
+          return view('users.sales.sale_invoice_details',$this->data);
+        }
+      return redirect()->route('users.receipts',['id' => $user_id]);
 
    	}
 

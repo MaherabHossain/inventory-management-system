@@ -47,19 +47,13 @@
 			    			<th>Product</th>
 			    			<th>Price</th>
 			    			<th>Quantity</th>
+			    			<th>Unit price</th>
 			    			<th>Total</th>
 			    			<th></th>
 			    		</thead>
 
 			    		<tfoot>
-			    			<th>
-			    				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_product">
-						        	 <i class="fa fa-plus"></i> Add Product 
-						       </button>
-			    			</th>
-			    			<th colspan="3" class="text-right">Total : </th>
-			    			<th>{{ $invoice->items->sum('totla') }}</th>
-			    			<th></th>
+			    			
 			    			
 			    		</tfoot>
 
@@ -70,6 +64,7 @@
 			    				<td>{{ $item->Product->tittle }}</td>
 			    				<td>{{ $item->Product->price }}</td>
 			    				<td>{{ $item->quantity }}</td>
+			    				<td>{{ $item->price }}</td>
 			    				<td>{{ $item->totla }}</td>
 			    				<td>
 			    					 {!! Form::open([ 'route' => ['users.sale_invoice.invoice.delete_product', ['user_id' => $user->id, 'invoice_id' => $invoice->id,'item_id'=>$item->id] ], 'method' => 'delete' ]) !!}
@@ -80,6 +75,30 @@
 			    				</td>
 			    			</tr>
 			    			@endforeach
+			    			<th>
+			    				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add_product">
+						        	 <i class="fa fa-plus"></i> Add Product 
+						       </button>
+
+						       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#add_receipt">
+						        	 <i class="fa fa-plus"></i> Add Payment 
+						       </button>
+
+			    			</th>
+			    			<th colspan="4" class="text-right">Total : </th>
+			    			<th>{{ $total = $invoice->items->sum('totla') }}</th>
+			    			<th></th>
+
+			    			<tr>
+			    				<td colspan="5" class="text-right"><strong> Pay : </strong></td>
+			    				<td  class="text-right"><strong> {{ $pay = $invoice->receipt->sum('amount') }} </strong></td>
+			    			</tr>
+
+			    			<tr>
+			    				<td colspan="5" class="text-right"><strong> Due : </strong></td>
+			    				<td  class="text-right"><strong> {{ $total - $pay }} </strong></td>
+			    			</tr>
+
 			    		</tbody>
 			    	</table>
 			    </div>
@@ -132,6 +151,51 @@
             <label for="totla" class="col-sm-3 col-form-label text-right"> Total <span class="text-danger">*</span>  </label>
             <div class="col-sm-9">
               {{ Form::text('totla', NULL, [ 'class'=>'form-control', 'id' => 'totla', 'placeholder' => 'Total', 'required' ]) }}
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button> 
+        </div>
+      </div>
+      {!! Form::close() !!}
+  </div>
+</div>
+
+<!-- Modal for Add receipt -->
+
+<div class="modal fade" id="add_receipt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    {!! Form::open([ 'route' => ['users.receipts.store', ['id'=>$user->id,'invoice_id' => $invoice->id ]], 'method' => 'post' ]) !!}
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title " id="newPaymentModalLabel"> New Payments </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">  
+          
+          <div class="form-group row">
+            <label for="date" class="col-sm-3 col-form-label text-right"> Date <span class="text-danger">*</span> </label>
+            <div class="col-sm-9">
+              {{ Form::date('date', NULL, [ 'class'=>'form-control', 'id' => 'date', 'placeholder' => 'Date', 'required' ]) }}
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="amount" class="col-sm-3 col-form-label text-right">Amount <span class="text-danger">*</span>  </label>
+            <div class="col-sm-9">
+              {{ Form::text('amount', NULL, [ 'class'=>'form-control', 'id' => 'amount', 'placeholder' => 'Amount', 'required' ]) }}
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="note" class="col-sm-3 col-form-label text-right">Note </label>
+            <div class="col-sm-9">
+              {{ Form::textarea('note', NULL, [ 'class'=>'form-control', 'id' => 'note', 'rows' => '3', 'placeholder' => 'Note' ]) }}
             </div>
           </div>
 

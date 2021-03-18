@@ -42,25 +42,20 @@
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer Name</th>
-                        <th>Challan No</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Note</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                </tfoot>
                 <tbody>
+                  <?php
+                    $total = 0;
+                  ?>
                  	@foreach($users->sales as $sale)
                     <tr>
                         <td>{{ $sale->id }}</td>
                         <td>{{ $users->name}}</td>
                         <td>{{ $sale->challan_no}}</td>
                         <td>{{ $sale->date}}</td>
-                        <td>100</td>
+                        <?php
+                          $total += $sale->items->sum('totla');
+                        ?>
+                        <td>{{ $sale->items->sum('totla') }}</td>
                         <td>{{ $sale->note}}</td>
                         <td class="text-right">
 
@@ -75,6 +70,12 @@
                         </td>
                     </tr>
                     @endforeach
+                    <tfoot>
+                      <tr>
+                          <th colspan="4" class="text-right">Total</th>
+                          <th colspan="3">{{ $total }}</th>
+                      </tr>
+                  </tfoot>
                 </tbody>
             </table>
         </div>

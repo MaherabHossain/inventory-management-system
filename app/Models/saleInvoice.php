@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\saleItems;
+use App\Models\Receipt;
 
 class saleInvoice extends Model
 {
@@ -15,6 +16,11 @@ class saleInvoice extends Model
      public function items(){
 
         return $this->hasMany(saleItems::class);
+    }
+
+    public function receipt(){
+
+        return $this->hasMany(Receipt::class);
     }
 
     

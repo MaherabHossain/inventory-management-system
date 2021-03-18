@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth'],function(){
 
     // users->receipts
     Route::get('/receipts/{id}', 				[receiptsController::class,'index'])->name('users.receipts');
-    Route::post('/receipts/{id}', 				[receiptsController::class,'store'])->name('users.receipts.store');
+    Route::post('/receipts/{id}/{invoice_id?}', 				[receiptsController::class,'store'])->name('users.receipts.store');
     Route::delete('/receipts/{user_id}/{id}', 	[receiptsController::class,'delete'])->name('users.receipts.delete');
 
 
