@@ -31,11 +31,9 @@ class receiptsController extends Controller
             Session::flash('message','Receipt Added Successfully!');
         }
         if ($invoice_id) {
-          $this->data['invoice'] = saleInvoice::findOrFail($invoice_id);
-          $this->data['user'] = User::findOrFail($user_id);
-          $this->data['products'] = Product::findProduct();
+
           Session::flash('message','Receipt Added Successfully!');
-          return view('users.sales.sale_invoice_details',$this->data);
+          return redirect()->route('users.sale_invoice.invoice',['user_id'=> $user_id, 'invoice_id' => $invoice_id]);
         }
       return redirect()->route('users.receipts',['id' => $user_id]);
 
