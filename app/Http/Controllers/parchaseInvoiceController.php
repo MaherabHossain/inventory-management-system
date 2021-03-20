@@ -4,12 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\parchaseInvoiceRequest;
+use App\Models\parchaseInvoice;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class parchaseInvoiceController extends Controller
 {
     public function index( $id ){
-    	$this->data['users'] = User::findOrFail( $id );
+    	$this->data['user'] = User::findOrFail( $id );
     	return view('users.parchase.parchase_invoice',$this->data);
     	return $id;
+    }
+    public function store ( parchaseInvoiceRequest $request, $user_id ){
+
+    	$formData 				= $request->all();
+    	$formData['admin_id']   = Auth::id();
+    	$formData['user_id']    = $user_id;
+
+    	if(parchaseInvoice::create($formData)){
+    		Session::flash('message','Parchase Invoice Created Sucessfully :)');
+    	}
+    	return redirect()->route('users.parchase_invoice',['id'=> $user_id]);
+    }
+
+    public function delete ($user_id, $invoice_id){
+
+      if(parchaseInvoice::find($invoice_id)->delete()){
+    		Session::flash('message','Parchase Invoice Deleted Sucessfully :)');
+    	}
+    	return redirect()->route('users.parchase_invoice',['id'=> $user_id]);
+    }
+
+    public function invoiceDetails ( $user_id, $invoice_id ){
+    	$this->data['invoice'] = parchaseInvoice::findOrFail($invoice_id);
+    	$this->data['user']    = User::findOrFail($user_id);
+
+    	return view('users.parchase.parchase_invoice_details',$this->data);
     }
 }

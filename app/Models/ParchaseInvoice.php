@@ -10,6 +10,8 @@ class ParchaseInvoice extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['date','challan_no','note','user_id','admin_id'];
+    
 	public function items(){
 	    return $this->hasMany(ParchaseItems::class);
 	}

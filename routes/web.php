@@ -74,8 +74,11 @@ Route::group(['middleware' => 'auth'],function(){
 
 
     //user parchase
-    Route::get('/parchase-invoice/{id}',		    [parchaseInvoiceController::class,'index'])->name('users.parchase_invoice');
+    Route::get('/parchase-invoice/{id}',		             [parchaseInvoiceController::class,'index'])->name('users.parchase_invoice');
 
+    Route::post('parchase-invoice/{user_id}',	             [parchaseInvoiceController::class,'store'])->name('user.parchase_invoice.store');
+    Route::get('parchase-invoice/{user_id}/{invoice_id}',	 [parchaseInvoiceController::class,'invoiceDetails'])->name('user.parchase_invoice.invoiceDetails');
+    Route::delete('parchase-invoice/{user_id}/{invoice_id}', [parchaseInvoiceController::class,'delete'])->name('user.parchase_invoice.delete');
 
 
     ///user payment
