@@ -25,10 +25,10 @@ class saleInvoiceController extends Controller
      	$formData	 			= $request->all();
     	$formData['user_id']	= $user_id;
     	$formData['admin_id']	= Auth::id();
-    	if(saleInvoice::create($formData)){
+    	if($invoice = saleInvoice::create($formData)){
             Session::flash('message','Sale Invoice Added Successfully!');
         }
-      return redirect()->route('users.sale_invoice',['id' => $user_id]);
+      return redirect()->route('users.sale_invoice.invoice',['user_id' => $user_id, 'invoice_id' => $invoice->id]);
      }
 
      public function delete( $user_id, $id ){

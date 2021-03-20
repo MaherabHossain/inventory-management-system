@@ -3,14 +3,17 @@
 @section('tittle','sale invoice')
 
 @section('content')
-<div class="row clearfix mb-4">
+<div class="row clearfix mb-4" >
 	<div class="col-md-4">
-	<h3>Sale invoice details</h3>	
+	<h3 >Sale invoice details</h3>	
 	</div>
-	<div class="col-md-8 text-right">
 
+	<div class="col-md-8 text-right">
+		<a href="#" class="btn btn-info btn-sm"><i class="fa fa-save"> print invoice</i></a>
 	</div>
 </div>
+
+
 
 <div class="row clearfix">
 	<div class="col-md-2">
@@ -20,6 +23,7 @@
     	<div class="card shadow mb-4">
             <div class="card shadow mb-4">
 			    <div class="card-header py-3">
+
 			      <h6 class="m-0 font-weight-bold text-primary"> Sale invoice details </h6>
 			    </div>
 			    <div class="card-body">
@@ -208,3 +212,6 @@
       {!! Form::close() !!}
   </div>
 </div>
+
+
+
