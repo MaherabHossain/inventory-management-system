@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post('parchase-invoice/{user_id}',	             [parchaseInvoiceController::class,'store'])->name('user.parchase_invoice.store');
     Route::get('parchase-invoice/{user_id}/{invoice_id}',	 [parchaseInvoiceController::class,'invoiceDetails'])->name('user.parchase_invoice.invoiceDetails');
     Route::delete('parchase-invoice/{user_id}/{invoice_id}', [parchaseInvoiceController::class,'delete'])->name('user.parchase_invoice.delete');
+    Route::post('parchase-invoice/{user_id}/{invoice_id}',   [parchaseInvoiceController::class,'productStore'])->name('user.parchase_invoice.add_product');
 
 
     ///user payment

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\saleItems;
 use App\Models\Receipt;
+use App\Models\Payment;
 
 class saleInvoice extends Model
 {
@@ -17,6 +18,12 @@ class saleInvoice extends Model
 
         return $this->hasMany(saleItems::class);
     }
+
+       public function payment(){
+
+        return $this->hasMany(Payment::class);
+    }
+
 
     public function receipt(){
 
