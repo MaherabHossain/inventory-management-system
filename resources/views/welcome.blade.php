@@ -4,6 +4,6 @@
 
 @section('content')
 
-<h1>i am from home page</h1>
+<h1> home page</h1>
 
 @stop

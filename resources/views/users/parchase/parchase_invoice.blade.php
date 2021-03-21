@@ -36,22 +36,15 @@
                       <th class="text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Challen No</th>
-                      <th>Customer</th>
-                      <th>Date</th>
-                      <th>Total</th>
-                      <th class="text-right">Actions</th>
-                    </tr>
-                  </tfoot>
                   <tbody>
+                    <?php $total = 0;?>
                     @foreach ($user->parchases as $parchase)
                         <tr>
                           <td> {{ $parchase->challan_no }} </td>
                           <td> {{ $user->name }} </td>
                           <td> {{ $parchase->date }} </td>
-                          <td> 100 </td>
+                          <?php $total += $parchase->items->sum('totla');?>
+                          <td> {{ $parchase->items->sum('totla') }} </td>
                           <td class="text-right">
                             <form method="POST" action=" {{ route('user.parchase_invoice.delete', ['user_id' => $user->id,'invoice_id' => $parchase->id]) }} ">
                                 <a class="btn btn-primary btn-sm" href="{{ route('user.parchase_invoice.invoiceDetails', ['user_id' => $user->id,'invoice_id' => $parchase->id]) }}"> 
@@ -67,6 +60,13 @@
                         </tr>
                     @endforeach
                   </tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td><strong>Total: </strong></td>
+                    <td colspan="2">{{ $total }}</td>
+
+                  </tr>
                 </table>
               </div>
         </div>

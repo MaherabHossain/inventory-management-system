@@ -30,5 +30,5 @@ class saleInvoice extends Model
         return $this->hasMany(Receipt::class);
     }
 
-    
+   
 }

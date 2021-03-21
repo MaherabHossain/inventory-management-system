@@ -24,10 +24,10 @@ class parchaseInvoiceController extends Controller
     	$formData['admin_id']   = Auth::id();
     	$formData['user_id']    = $user_id;
 
-    	if(parchaseInvoice::create($formData)){
+    	if($invoice = parchaseInvoice::create($formData)){
     		Session::flash('message','Parchase Invoice Created Sucessfully :)');
     	}
-    	return redirect()->route('users.parchase_invoice',['id'=> $user_id]);
+    	return redirect()->route('user.parchase_invoice.invoiceDetails',['user_id'=> $user_id,'invoice_id'=>$invoice]);
     }
 
     public function delete ($user_id, $invoice_id){
@@ -39,18 +39,18 @@ class parchaseInvoiceController extends Controller
     }
 
     public function invoiceDetails ( $user_id, $invoice_id ){
-    	$this->data['invoice'] = parchaseInvoice::findOrFail($invoice_id);
-    	$this->data['user']    = User::findOrFail($user_id);
-    	$this->data['products']    = Product::findProduct();
+    	$this->data['invoice']   = parchaseInvoice::findOrFail($invoice_id);
+    	$this->data['user']      = User::findOrFail($user_id);
+    	$this->data['products']  = Product::findProduct();
     	$this->data['total']     = $this->data['invoice']->items->sum('totla');
-    	$this->data['pay']     = $this->data['invoice']->payment->sum('amount');
+    	$this->data['pay']       = $this->data['invoice']->payment->sum('amount');
 
     	return view('users.parchase.parchase_invoice_details',$this->data);
     }
 
     public function productStore ( Request $request, $user_id, $invoice_id ) {
 
-    	$formData = $request->all();
+    	$formData                        = $request->all();
     	$formData['parchase_invoice_id'] = $invoice_id;
 
     	 if(ParchaseItems::create($formData)){

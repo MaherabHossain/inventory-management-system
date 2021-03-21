@@ -84,7 +84,7 @@ Route::group(['middleware' => 'auth'],function(){
 
     ///user payment
     Route::get('/payment/{id}',					    [paymentController::class,'index'])->name('users.payment');
-    Route::post('/payment-store/{user_id}',			[paymentController::class,'store'])->name('users.payment.store');
+    Route::post('/payment-store/{user_id}/{invoice_id?}',			[paymentController::class,'store'])->name('users.payment.store');
     Route::delete('/payment-delete/{user_id}/{id}', [paymentController::class,'delete'])->name('users.payments.delete');
 
 

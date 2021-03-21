@@ -16,12 +16,18 @@ class paymentController extends Controller
     	return view('users.payment.payment',$this->data);
     }
 
-    public function store( paymentRequest $request, $id ){
+    public function store( paymentRequest $request, $user_id , $invoice_id){
     	$formData	 = $request->all();
-    	$formData['user_id'] = $id;
+    	$formData['user_id'] = $user_id;
       $formData['admin_id'] = Auth::id();
+      if($invoice_id){
+        $formData['parchase_invoice_id'] = $invoice_id;
+      }
     	if(Payment::create($formData)){
             Session::flash('message','Payment Added Successfully!');
+        }
+        if ($invoice_id) {
+          return redirect()->route('user.parchase_invoice.invoiceDetails',['user_id'=>$user_id,'invoice_id'=>$invoice_id]);
         }
         return redirect()->route('users.payment',['id' => $id]);
     }

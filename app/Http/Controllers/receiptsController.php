@@ -31,8 +31,6 @@ class receiptsController extends Controller
             Session::flash('message','Receipt Added Successfully!');
         }
         if ($invoice_id) {
-
-          Session::flash('message','Receipt Added Successfully!');
           return redirect()->route('users.sale_invoice.invoice',['user_id'=> $user_id, 'invoice_id' => $invoice_id]);
         }
       return redirect()->route('users.receipts',['id' => $user_id]);
