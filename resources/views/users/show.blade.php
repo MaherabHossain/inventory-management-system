@@ -21,11 +21,13 @@
 	                        Total Sale</div>
 	                    <div class="h5 mb-0 font-weight-bold text-gray-800">
 	                    	<?php
+	                    	$salePayment = 0;
 	                    	$total = 0;
 	                    	 foreach ($user->sales as $sale) {
-	                    	 	$total += $sale->items->sum('totla');
+	                    	 	$total  += $sale->items->sum('totla');
 	                    	 }
 	                    	 echo $total;
+	                    	$salePayment += $total;
 	                    	?>	
 	                    </div>
 	                </div>
@@ -46,10 +48,12 @@
 	                        Total Parchase</div>
 	                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
 	                    	$total = 0;
+	                    	$purchaseReceipt = 0;
 	                    	 foreach ($user->parchases as $parchase) {
 	                    	 	$total += $parchase->items->sum('totla');
 	                    	 }
 	                    	 echo $total;
+	                    	 $purchaseReceipt += $total;
 	                    	?></div>
 	                </div>
 	                <div class="col-auto">
@@ -67,7 +71,8 @@
 	                <div class="col mr-2">
 	                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
 	                        Total Receipts</div>
-	                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $user->receipts->sum('amount') }}</div>
+	                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $receipt = $user->receipts->sum('amount') }}</div>
+	                    <?php  $purchaseReceipt += $receipt;?>
 	                </div>
 	                <div class="col-auto">
 	                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -84,7 +89,28 @@
 	                <div class="col mr-2">
 	                    <div class="text-xs font-weight-bold text-secondary  text-uppercase mb-1">
 	                        Total Payment</div>
-	                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $user->payments->sum('amount') }}</div>
+	                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $payment = $user->payments->sum('amount') }}</div>
+	                    <?php
+	                      $salePayment += $payment;
+	                    ?>
+	                </div>
+	                <div class="col-auto">
+	                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="col-xl-3 col-md-6 mb-4">
+	    <div class="card border-left-success shadow h-100 py-2">
+	        <div class="card-body">
+	            <div class="row no-gutters align-items-center">
+	                <div class="col mr-2">
+	                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+	                        Banance</div>
+	                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+	                    	{{ $purchaseReceipt - $salePayment }}
+	                    </div>
 	                </div>
 	                <div class="col-auto">
 	                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -137,10 +163,4 @@
 		</div>
     </div>
 </div>
-
-
-
-
-
-
 @stop

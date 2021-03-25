@@ -19,7 +19,7 @@ class receiptsController extends Controller
    		return view('users.receipts.receipts',$this->data);
    	}
 
-   	public function store( receiptRequest $request, $user_id, $invoice_id){
+   	public function store( receiptRequest $request, $user_id, $invoice_id = NULL){
 
    		$formData	 			= $request->all();
     	$formData['user_id']	= $user_id;

@@ -16,7 +16,7 @@ class paymentController extends Controller
     	return view('users.payment.payment',$this->data);
     }
 
-    public function store( paymentRequest $request, $user_id , $invoice_id){
+    public function store( paymentRequest $request, $user_id , $invoice_id = NULL){
     	$formData	 = $request->all();
     	$formData['user_id'] = $user_id;
       $formData['admin_id'] = Auth::id();
@@ -29,7 +29,7 @@ class paymentController extends Controller
         if ($invoice_id) {
           return redirect()->route('user.parchase_invoice.invoiceDetails',['user_id'=>$user_id,'invoice_id'=>$invoice_id]);
         }
-        return redirect()->route('users.payment',['id' => $id]);
+        return redirect()->route('users.payment',['id' => $user_id]);
     }
 
 
