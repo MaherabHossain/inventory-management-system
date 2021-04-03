@@ -43,6 +43,17 @@ class productController extends Controller
     public function show($id)
     {
         $this->data['product'] = Product::findOrFail($id);
+        
+        $sale  = 0;
+        foreach ($this->data['product']->sale_product as $saleProduct) {
+            $sale+= $saleProduct->quantity;
+        }
+        $purchase = 0;
+        foreach ($this->data['product']->purchase_product as $purchaseProduct) {
+            $purchase+= $purchaseProduct->quantity;
+        }
+
+        $this->data['stock'] = $purchase-$sale;
         return view('products.show',$this->data);
     }
 

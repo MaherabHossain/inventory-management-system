@@ -11,6 +11,7 @@ use App\Http\Controllers\saleInvoiceController;
 use App\Http\Controllers\parchaseInvoiceController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\receiptsController;
+use App\Http\Controllers\stockController;
 
 
 /*
@@ -93,6 +94,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/receipts/{id}', 				[receiptsController::class,'index'])->name('users.receipts');
     Route::post('/receipts/{id}/{invoice_id?}', 				[receiptsController::class,'store'])->name('users.receipts.store');
     Route::delete('/receipts/{user_id}/{id}', 	[receiptsController::class,'delete'])->name('users.receipts.delete');
+
 
 
 

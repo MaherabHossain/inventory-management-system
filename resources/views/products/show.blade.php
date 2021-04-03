@@ -44,6 +44,10 @@
 			      		<th class="text-right">Description : </th>
 			      		<td> {{ $product->description }} </td>
 			      	</tr>
+			      	<tr>
+			      		<th class="text-right">Stock : </th>
+			      		<td> {{ $stock }} </td>
+			      	</tr>
 				     </table>
 	    		</div>
 	    	</div>
