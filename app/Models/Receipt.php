@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin;
+use App\Models\User;
 use App\Models\saleInvoice;
 
 class Receipt extends Model
@@ -16,6 +17,10 @@ class Receipt extends Model
 	public function admin(){
 
 	return $this->belongsTo(Admin::class);
+	}
+	public function user(){
+
+	return $this->belongsTo(User::class);
 	}
 
 	public function invoice(){

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin;
+use App\Models\User;
 
 class Payment extends Model
 {
@@ -17,6 +18,12 @@ class Payment extends Model
 	public function admin(){
 
 	return $this->belongsTo(Admin::class);
+
+	}
+
+	public function user(){
+
+	return $this->belongsTo(User::class);
 
 	}
 }

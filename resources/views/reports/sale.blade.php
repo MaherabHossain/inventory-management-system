@@ -1,0 +1,88 @@
+ @extends('layout.app')
+
+@section('tittle','sale reports')
+
+@section('content')
+<div class="row clearfix mb-4">
+	<div class="col-md-6">
+	<h3>Sale Reports</h3>	
+	</div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+    	<h6 class="m-0 font-weight-bold text-primary">Search Report</h6>
+    </div>
+     @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <div class="card-body">
+       {!! Form::open(['route' => 'sale_information.search','method'=>'post']) !!}
+            <div class="row mb-4">
+                <div class="col-md-3">                 
+                    {{ Form::date('date1',NULL,['class' => 'form-control'])}}
+                </div>
+                <strong class="text-primary">TO</strong>
+                <div class="col-md-3">
+                    {{ Form::date('date2',NULL,['class' => 'form-control'])}}
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" name="" class="btn btn-info" value="search">
+                </div>
+            </div>
+        {!! Form::close() !!}
+        <div class="table-responsive">
+                @if(session('message'))
+                    <div class="alert alert-success" role="alert">
+                        <h5>{{ session('message') }}</h5>
+                    </div>
+                 @endif
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $total = 0;?>
+                 	@foreach($sale_items as $sale)
+                    <tr>
+                        <td>{{ $sale->id }}</td>
+                        <td>{{ $sale->product->tittle }}</td>
+                        <td>{{ $sale->product->category->tittle }}</td>
+                        <td>{{ $sale->quantity }}</td>
+                        <td>{{ $sale->price }}</td>
+                        <?php
+                            $total += $sale->price;
+                        ?>
+                        <td>{{ $sale->created_at }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>{{ $total }}</th>
+                        <th>Date</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+@stop
+
