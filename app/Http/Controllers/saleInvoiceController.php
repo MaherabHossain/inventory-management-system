@@ -59,7 +59,6 @@ class saleInvoiceController extends Controller
      }
 
      public function deleteProduct($user_id,$invoice_id,$item_id){
-
         if(saleItems::find($item_id)->delete()){
             Session::flash('message','Product Deleted Successfully!');
         }

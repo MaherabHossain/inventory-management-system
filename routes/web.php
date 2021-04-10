@@ -12,6 +12,7 @@ use App\Http\Controllers\parchaseInvoiceController;
 use App\Http\Controllers\paymentController;
 use App\Http\Controllers\receiptsController;
 use App\Http\Controllers\reportController;
+use App\Http\Controllers\dashBoardController;
 
 
 
@@ -35,9 +36,7 @@ Route::group(['middleware' => 'auth'],function(){
 
 
 	// HOME
-	Route::get('/dashboard', function () {
-	    return view('welcome');
-	});
+	Route::get('/dashboard', [dashBoardController::class,'index']);
 
 	// LOGIN
 
@@ -82,7 +81,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('parchase-invoice/{user_id}/{invoice_id}',	 [parchaseInvoiceController::class,'invoiceDetails'])->name('user.parchase_invoice.invoiceDetails');
     Route::delete('parchase-invoice/{user_id}/{invoice_id}', [parchaseInvoiceController::class,'delete'])->name('user.parchase_invoice.delete');
     Route::post('parchase-invoice/{user_id}/{invoice_id}',   [parchaseInvoiceController::class,'productStore'])->name('user.parchase_invoice.add_product');
-
+    Route::delete('purchase-invoice/{user_id}/invoice/{invoice_id}/{item_id}',    [parchaseInvoiceController::class,'deleteProduct'])->name('users.purchase_invoice.delete_product');
 
     ///user payment
     Route::get('/payment/{id}',					           [paymentController::class,'index'])->name('users.payment');
@@ -113,6 +112,8 @@ Route::group(['middleware' => 'auth'],function(){
 
 
 });
+
+
 
 
 

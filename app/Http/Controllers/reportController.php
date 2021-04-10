@@ -9,6 +9,7 @@ use App\Models\ParchaseItems;
 use App\Models\Payment;
 use App\Models\Receipt;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 class reportController extends Controller
 {
@@ -20,8 +21,11 @@ class reportController extends Controller
 
     public function search_sale ( searchRequest $request ){
 
+        $date = Carbon::createFromDate($request->date2)->addDay();
+        $date2 = $date->toDateString();
+
     	$this->data['sale_items'] = saleItems::where('created_at', '>=', $request->date1)
-					    ->where('created_at', '<=', $request->date2)
+					    ->where('created_at', '<=', $date2)
 					    ->get();
 		Session::flash('message','Result for '.$request->date1.'  TO  ' .$request->date2);
 		return view('reports.sale',$this->data);
@@ -35,10 +39,13 @@ class reportController extends Controller
 
     public function search_purchase ( searchRequest $request ){
 
+         $date = Carbon::createFromDate($request->date2)->addDay();
+        $date2 = $date->toDateString();
+
     	$this->data['purchase'] = ParchaseItems::where('created_at', '>=', $request->date1)
 										       ->where('created_at', '<=', $request->date2)
 										       ->get();
-		Session::flash('message','Result for '.$request->date1.'  TO  ' .$request->date2);
+		Session::flash('message','Result for '.$request->date1.'  TO  ' .$date2);
 		return view('reports.purchase',$this->data);
     }
 
@@ -50,8 +57,11 @@ class reportController extends Controller
 
     public function search_payment ( searchRequest $request ){
 
+         $date = Carbon::createFromDate($request->date2)->addDay();
+        $date2 = $date->toDateString();
+
     	$this->data['payment'] = Payment::where('created_at', '>=', $request->date1)
-									    ->where('created_at', '<=', $request->date2)
+									    ->where('created_at', '<=', $date2)
 									    ->get();
 		Session::flash('message','Result for '.$request->date1.'  TO  ' .$request->date2);
 		return view('reports.payment',$this->data);
@@ -66,8 +76,11 @@ class reportController extends Controller
 
     public function search_receipt ( searchRequest $request ){
 
+         $date = Carbon::createFromDate($request->date2)->addDay();
+        $date2 = $date->toDateString();
+
 		$this->data['receipt'] = Receipt::where('created_at', '>=', $request->date1)
-					    ->where('created_at', '<=', $request->date2)
+					    ->where('created_at', '<=', $date2)
 					    ->get();
 		Session::flash('message','Result for '.$request->date1.'  TO  ' .$request->date2);
 		return view('reports.receipt',$this->data);

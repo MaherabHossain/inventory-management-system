@@ -5,7 +5,7 @@
 @section('content')
 <div class="row clearfix mb-4">
 	<div class="col-md-6">
-	<h3>Sale Reports</h3>	
+	<h3>Purchase Reports</h3>	
 	</div>
 </div>
 
@@ -62,7 +62,7 @@
                         <td>{{ $purchase->product->tittle }}</td>
                         <td>{{ $purchase->product->category->tittle }}</td>
                         <td>{{ $purchase->quantity }}</td>
-                        <td>{{ $purchase->price }}</td>
+                        <td>{{ $purchase->totla }}</td>
                         <?php
                             $total += $purchase->price;
                         ?>

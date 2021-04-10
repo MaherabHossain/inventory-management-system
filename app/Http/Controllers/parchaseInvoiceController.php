@@ -61,4 +61,15 @@ class parchaseInvoiceController extends Controller
     	
     }
 
+	public function deleteProduct($user_id,$invoice_id,$item_id){
+		// echo "user id ".$user_id;
+		// echo "<br>invoice id ".$invoice_id;
+		// echo "<br>item id ".$item_id;
+		// return '<br>ok';
+        if(ParchaseItems::findOrFail($item_id)->delete()){
+            Session::flash('message','Product Deleted Successfully!');
+        }
+        return redirect()->route( 'user.parchase_invoice.invoiceDetails', ['user_id' => $user_id, 'invoice_id' => $invoice_id] );
+     }
+
 }

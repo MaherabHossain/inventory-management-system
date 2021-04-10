@@ -63,14 +63,14 @@
 			    		<tbody>
 			    			@foreach($invoice->items as $key => $item)
 			    			<tr>
-			    				<td>{{ $key+1 }}</td>
+			    				<td>{{ $item->id }}</td>
 			    				<td>{{ $item->Product->tittle }}</td>
 			    				<td>{{ $item->Product->price }}</td>
 			    				<td>{{ $item->quantity }}</td>
 			    				<td>{{ $item->price }}</td>
 			    				<td>{{ $item->totla }}</td>
 			    				<td>
-			    					 {!! Form::open([ 'route' => ['users.sale_invoice.invoice.delete_product', ['user_id' => $user->id, 'invoice_id' => $invoice->id,'item_id'=>$item->id] ], 'method' => 'delete' ]) !!}
+			    					 {!! Form::open([ 'route' => ['users.purchase_invoice.delete_product', ['user_id' => $user->id, 'invoice_id' => $invoice->id,'item_id'=>$item->id] ], 'method' => 'delete' ]) !!}
 			                          <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger btn-sm"> 
 			                            <i class="fa fa-trash"></i>  
 			                          </button> 

@@ -62,7 +62,7 @@
                         <td>{{ $sale->product->tittle }}</td>
                         <td>{{ $sale->product->category->tittle }}</td>
                         <td>{{ $sale->quantity }}</td>
-                        <td>{{ $sale->price }}</td>
+                        <td>{{ $sale->totla }}</td>
                         <?php
                             $total += $sale->price;
                         ?>

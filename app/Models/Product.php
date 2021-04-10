@@ -21,13 +21,13 @@ class Product extends Model
     }
 
         public static function findProduct(){
-    	$products            = Product::all();
-    	$data['products']    = [];
+      	$products            = Product::all();
+      	$data['products']    = [];
 
-    	foreach ($products as $product) {
-    		$data['products'][$product->id] = $product->tittle;
-    	}
-    	return $data;
+      	foreach ($products as $product) {
+      		$data['products'][$product->id] = $product->tittle;
+      	}
+      	return $data;
     }
 
      public function sale_product(){
